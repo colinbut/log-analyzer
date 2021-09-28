@@ -3,9 +3,10 @@ package main
 import (
 	"bufio"
 	"flag"
-	"fmt"
 	"os"
 	"strings"
+
+	"github.com/jedib0t/go-pretty/v6/table"
 )
 
 const (
@@ -58,8 +59,17 @@ func main() {
 	}
 
 	// log output to console
+	// for key, value := range logLevelCount {
+	// 	fmt.Println(key, value)
+	// }
+
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{"LogLevel", "Count"})
 	for key, value := range logLevelCount {
-		fmt.Println(key, value)
+		t.AppendRow([]interface{}{key, value})
+		t.AppendSeparator()
 	}
+	t.Render()
 
 }
